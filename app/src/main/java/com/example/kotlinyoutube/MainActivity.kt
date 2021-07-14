@@ -1,5 +1,6 @@
 package com.example.kotlinyoutube
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         arrayOf("Database Module", "E-Kb6FgMbVw"))
     private lateinit var youTubePlayerView: YouTubePlayerView
     private lateinit var player: YouTubePlayer
+    private var currentVideo = 0
+    private var timeStamp = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +32,34 @@ class MainActivity : AppCompatActivity() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
                 player = youTubePlayer
+                player.loadVideo(videos[currentVideo][1], timeStamp)
                 initializeRV()
             }
         })
 
+    }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation === Configuration.ORIENTATION_LANDSCAPE) {
+            youTubePlayerView.enterFullScreen()
+        } else if (newConfig.orientation === Configuration.ORIENTATION_PORTRAIT) {
+            youTubePlayerView.exitFullScreen()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("currentVideo", currentVideo)
+        outState.putFloat("timeStamp", timeStamp)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        currentVideo = savedInstanceState.getInt("currentVideo", 0)
+        timeStamp = savedInstanceState.getFloat("timeStamp", 0f)
     }
 
     private fun initializeRV(){

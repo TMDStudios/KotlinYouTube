@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import kotlinx.android.synthetic.main.video_item.view.*
 
-class VideoAdapter(private val videoList: Array<Array<String>>, private val player: YouTubePlayer): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>(){
+class VideoAdapter(
+    private val videoList: Array<Array<String>>,
+    private val player: YouTubePlayer): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>(){
     class VideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val button: Button = itemView.btVideo
     }
