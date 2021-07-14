@@ -9,15 +9,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class MainActivity : AppCompatActivity() {
-    private val videos: Array<String> = arrayOf(
-        "CiFyTc1SwPw",
-        "ZbZFMDk69IA",
-        "DU1qMhyKv8g",
-        "G_XYXuC8b9M",
-        "sqJWyPhZkDw",
-        "yBkRLhoVTmc",
-        "E-Kb6FgMbVw"
-    )
+    private val videos: Array<Array<String>> = arrayOf(
+        arrayOf("Numbers Game", "CiFyTc1SwPw"),
+        arrayOf("Calculator", "ZbZFMDk69IA"),
+        arrayOf("Guess the Phrase", "DU1qMhyKv8g"),
+        arrayOf("Username and Password", "G_XYXuC8b9M"),
+        arrayOf("GUI Username and Password", "sqJWyPhZkDw"),
+        arrayOf("Country Capitals", "yBkRLhoVTmc"),
+        arrayOf("Database Module", "E-Kb6FgMbVw"))
     private lateinit var youTubePlayerView: YouTubePlayerView
     private lateinit var player: YouTubePlayer
 

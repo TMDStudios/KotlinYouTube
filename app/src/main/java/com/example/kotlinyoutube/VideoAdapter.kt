@@ -1,17 +1,16 @@
 package com.example.kotlinyoutube
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import kotlinx.android.synthetic.main.video_item.view.*
 
-class VideoAdapter(private val videoList: Array<String>, private val player: YouTubePlayer): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>(){
+class VideoAdapter(private val videoList: Array<Array<String>>, private val player: YouTubePlayer): RecyclerView.Adapter<VideoAdapter.VideoViewHolder>(){
     class VideoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val textView: TextView = itemView.textView
+        val button: Button = itemView.btVideo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
@@ -24,9 +23,12 @@ class VideoAdapter(private val videoList: Array<String>, private val player: You
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        val currentItem = videoList[position]
-        holder.textView.text = currentItem
-        holder.textView.setOnClickListener { player.loadVideo(currentItem, 0f) }
+        val currentTitle = videoList[position][0]
+        val currentLink = videoList[position][1]
+        holder.button.text = currentTitle
+        holder.button.setOnClickListener {
+            player.loadVideo(currentLink, 0f)
+        }
     }
 
     override fun getItemCount() = videoList.size
