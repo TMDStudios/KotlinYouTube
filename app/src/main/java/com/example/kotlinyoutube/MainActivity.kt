@@ -1,7 +1,11 @@
 package com.example.kotlinyoutube
 
+import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        checkInternet()
 
         youTubePlayerView = findViewById(R.id.ytPlayer)
         youTubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener() {
@@ -67,5 +73,20 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = VideoAdapter(videos, player)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+    }
+
+    private fun checkInternet(){
+        if(!connectedToInternet()){
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("Internet Connection Not Found")
+                .setPositiveButton("RETRY"){_, _ -> checkInternet()}
+                .show()
+        }
+    }
+
+    private fun connectedToInternet(): Boolean{
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnectedOrConnecting == true
     }
 }
